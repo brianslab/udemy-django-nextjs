@@ -39,7 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
+    'storages',
+    'django_filters',
+    'job.apps.JobConfig'
 ]
 
 MIDDLEWARE = [
@@ -128,8 +133,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# Misc
-# GDAL_LIBRARY_PATH = '/usr/local/lib/libgdal.so'
-# GEOS_LIBRARY_PATH = '/usr/local/lib/libgeos_c.so'
