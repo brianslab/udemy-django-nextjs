@@ -7,5 +7,6 @@ urlpatterns = [
     path('jobs/<str:pk>/', views.getJob, name='job'),
     path('jobs/<str:pk>/edit', views.editJob, name='editJob'),
     path('jobs/<str:pk>/delete', views.deleteJob, name='deleteJob'),
+    path('jobs/<str:pk>/apply', views.applyToJob, name='applyToJob'),
     path('stats/<str:topic>/', views.getTopicStats, name='getTopicStats'),
 ]
