@@ -133,7 +133,8 @@ def applyToJob(request, pk):
     if job.lastDate < timezone.now():
         return Response({'error': 'You can not apply to this job. Date is over'}, status=status.HTTP_400_BAD_REQUEST)
 
-    alreadyApplied = job.candidatesapplied_set.filter(user=user).exists()
+    alreadyApplied = job.candidatesapplied_set.filter(  # type: ignore
+        user=user).exists()
 
     if alreadyApplied:
         return Response({'error': 'You have already applied to this job.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -146,7 +147,7 @@ def applyToJob(request, pk):
 
     return Response({
         'applied': True,
-        'job_id': jobApplied.id
+        'job_id': jobApplied.id  # type: ignore
     },
         status=status.HTTP_200_OK
     )
@@ -172,6 +173,19 @@ def isApplied(request, pk):
     user = request.user
     job = get_object_or_404(Job, id=pk)
 
-    applied = job.candidatesapplied_set.filter(user=user).exists()
+    applied = job.candidatesapplied_set.filter(  # type: ignore
+        user=user).exists()
 
     return Response(applied)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getCurrentUserCreatedJobs(request):
+
+    args = {'postedBy': request.user.id}
+
+    jobs = Job.objects.filter(**args)
+    serializer = JobSerializer(jobs, many=True)
+
+    return Response(serializer.data)

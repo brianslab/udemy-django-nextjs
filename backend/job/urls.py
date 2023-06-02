@@ -11,5 +11,7 @@ urlpatterns = [
     path('stats/<str:topic>/', views.getTopicStats, name='getTopicStats'),
     path('me/jobs/applied', views.getCurrentUserAppliedJobs,
          name='getCurrentUserAppliedJobs'),
+    path('me/jobs', views.getCurrentUserCreatedJobs,
+         name='getCurrentUserCreatedJobs'),
     path('jobs/<str:pk>/check', views.isApplied, name='isApplied'),
 ]
