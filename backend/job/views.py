@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import JobSerializer
+from .serializers import JobSerializer, CandidatesAppliedSerializer
 from .models import Job, CandidatesApplied
 from .filters import JobFilter
 
@@ -150,3 +150,16 @@ def applyToJob(request, pk):
     },
         status=status.HTTP_200_OK
     )
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getCurrentUserAppliedJobs(request):
+
+    args = {'user_id': request.user.id}
+
+    jobs = CandidatesApplied.objects.filter(**args)
+
+    serializer = CandidatesAppliedSerializer(jobs, many=True)
+
+    return Response(serializer.data)
